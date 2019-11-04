@@ -21,6 +21,10 @@ class Evento {
         self.nombre = nombre
         self.urlFlyer = urlFlyer
     }
-    
+    init(diccionario : NSDictionary){
+        self.fecha = "fecha"
+        self.nombre = "nombre"
+        self.urlFlyer = "urlFlyer"
+    }
     
 }

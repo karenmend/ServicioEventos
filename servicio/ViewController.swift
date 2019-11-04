@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,6 +16,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AF.request("http://localhost:888/eventos/wp-json/wp/v2/eventos").responseJSON{
+            response in
+            switch(response.result){
+            case .success(let datos) :
+                if let arregloEventos = datos as? NSArray{
+                    for evento in arregloEventos {
+                        if let diccionarioEvento = evento as? NSDictionary{
+                        let nuevoEvento = Evento(diccionario : diccionarioEvento)
+                            self.eventos.append(nuevoEvento)
+                        }
+                    }
+                }
+            case .failure( _) :
+                print("Algo salió mal.")
+                
+            }
+        }
+       
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
